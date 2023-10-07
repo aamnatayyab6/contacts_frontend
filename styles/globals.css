@@ -265,3 +265,152 @@ h2 {
   color: #FFFFFF;
 }
 
+/* Modal screen */
+.modal {
+  display: flex;
+  width: 364px;
+  padding-top: 24px;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  border-radius: 8px;
+  background: var(--grey-g-100, #141414);
+}
+
+.modal-info {
+  display: flex;
+  width: 316px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 24px;
+}
+
+.frame {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.modal-pfp {
+  display: flex;
+  width: 88px;
+  height: 88px;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-pfp-image {
+  flex-shrink: 0;
+  border-radius: 88px;
+  border: 1px solid var(--grey-g-70, #232323);
+  background: lightgray 50% / cover no-repeat;
+}
+
+.add-pic-buttons {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.icon-label {
+  display: flex;
+  height: 40px;
+  padding: 8px 16px 8px 12px;
+  align-items: center;
+  gap: 8px;
+  border-radius: 8px;
+  background: var(--grey-g-50, #2D2D2D);
+}
+
+.add-pic {
+  color: var(--text-icon-primary, #FFF);
+  font-family: Lexend Deca;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.add-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  align-self: stretch;
+}
+
+.add-info-label {
+  align-self: stretch;
+  color: var(--text-icon-secondary, rgba(255, 255, 255, 0.56));
+
+  /* Message */
+  font-family: Lexend Deca;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 16px; /* 133.333% */
+  letter-spacing: 0.12px;
+}
+
+.input-field{
+  display: flex;
+  height: 40px;
+  padding: 8px 12px;
+  align-items: center;
+  gap: 8px;
+  align-self: stretch;
+  border-radius: 8px;
+  border: 1px solid var(--grey-g-60, #282828);
+  background: var(--grey-g-80, #1E1E1E);
+}
+
+.input-area {
+  flex: 1 0 0;
+  color: var(--text-icon-disabled, rgba(255, 255, 255, 0.32));
+  background: var(--grey-g-80, #1E1E1E);
+  font-family: Lexend Deca;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.modal-footer {
+  display: flex;
+  padding: 24px;
+  justify-content: flex-end;
+  align-items: flex-start;
+  gap: 8px;
+  align-self: stretch;
+}
+
+.modal-cancel-button {
+  display: flex;
+  height: 40px;
+  padding: 8px 16px;
+  align-items: center;
+  gap: 8px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.modal-done-button {
+  display: flex;
+  height: 40px;
+  padding: 8px 16px;
+  align-items: center;
+  gap: 8px;
+  border-radius: 8px;
+  background: #262626;
+  cursor: pointer;
+}
+
+.modal-cancel-done-text {
+  color: var(--text-icon-primary, #FFF);
+  font-family: Lexend Deca;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
