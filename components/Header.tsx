@@ -2,10 +2,15 @@ import Image from "next/image";
 import React, { useState } from "react";
 import AddEditContact from "@/components/AddEditContact";
 
-type Props = {};
+type Props = {
+  isVisible: boolean;
+  setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
+};
 
-export default function Header({}: Props) {
-  const [showOverlay, setShowOverlay] = useState(true);
+export default function Header({ isVisible, setShowModal }: Props) {
+  const handleAddNewClick = () => {
+    setShowModal(true);
+  };
   return (
     <>
       <div className="header-box">
@@ -55,10 +60,7 @@ export default function Header({}: Props) {
               </span>
 
               {/* add new */}
-              <span
-                className="add-new-icon"
-                onClick={() => setShowOverlay(true)}
-              >
+              <span className="add-new-icon" onClick={handleAddNewClick}>
                 <Image
                   src="/plusIcon.svg"
                   alt="Add New Button"
@@ -86,7 +88,15 @@ export default function Header({}: Props) {
           </span>
         </div>
       </div>
-      <AddEditContact isVisible={showOverlay} />
+      <div className="modal-container">
+        {isVisible && (
+          <AddEditContact
+            isVisible={isVisible}
+            onClose={() => setShowModal(false)}
+          />
+        )}
+      </div>
+      {/* {isVisible && <div className="modal-overlay" />} */}
     </>
   );
 }
