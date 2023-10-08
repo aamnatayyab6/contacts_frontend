@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import Image from "next/image";
+import Dropdown from "./Dropdown";
 
 type Props = {};
 
 export default function ContactListItem({}: Props) {
+  const [isDropdownVisible, setIsDropdownVisible] = useState(false);
   return (
     <div className="contact-item">
       <div className="contact-info">
@@ -27,7 +29,7 @@ export default function ContactListItem({}: Props) {
 
       {/* buttons on hover */}
       <div className="contact-item-buttons opacity-0 hover:opacity-100">
-      <span className="contact-item-buttons-icon-holder">
+        <span className="contact-item-buttons-icon-holder">
           <Image
             src="/mute.svg"
             alt="Mute Icon"
@@ -45,7 +47,10 @@ export default function ContactListItem({}: Props) {
             priority
           />
         </span>
-        <span className="contact-item-buttons-icon-holder"
+        <span
+          className="contact-item-buttons-icon-holder more-icon"
+          onMouseEnter={() => setIsDropdownVisible(true)}
+          onMouseLeave={() => setIsDropdownVisible(false)}
         >
           <Image
             src="/more-3-dots.svg"
@@ -54,6 +59,7 @@ export default function ContactListItem({}: Props) {
             height={24}
             priority
           />
+          {isDropdownVisible && <Dropdown />}
         </span>
       </div>
     </div>

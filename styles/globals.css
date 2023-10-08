@@ -245,10 +245,12 @@ h3 {
 
 .contact-item-buttons-icon-holder {
   display: flex;
+  flex-direction: column;
   height: 40px;
   width: 40px;
   padding: 8px;
   align-items: center;
+  cursor: pointer;
   gap: 8px;
   border-radius: 8px;
 }
@@ -455,4 +457,56 @@ h2 {
   font-style: normal;
   font-weight: 400;
   line-height: normal;
+}
+
+/* dropdown */
+.dropdown-container {
+  margin-left: 178px;
+  margin-top: 4px;
+}
+
+.dropdown {
+  display: flex;
+  width: 219px;
+  flex-direction: column;
+  align-items: flex-start;
+  border-radius: 8px;
+  background: var(--grey-g-80, #1E1E1E);
+  position: relative;
+  z-index: 2;
+
+}
+
+.dropdown-menu-item {
+  display: flex;
+  border-radius: 8px;
+  width: 219px;
+  padding: 12px 10px;
+  align-items: center;
+  gap: 12px;
+}
+
+.dropdown-menu-item:hover {
+  background: var(--grey-g-70, #232323); 
+}
+
+.dropdown-icon-img {
+  flex-shrink: 0;
+}
+
+.more-icon:hover {
+  border-radius: 8px;
+  background: var(--grey-g-80, #1E1E1E);
+}
+
+.dropdown-icon-text {
+  color: #FFF;
+
+  /* Body */
+  font-family: Lexend Deca;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px; /* 142.857% */
+  letter-spacing: 0.14px;
 }
