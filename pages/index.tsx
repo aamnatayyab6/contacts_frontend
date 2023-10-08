@@ -10,13 +10,15 @@ type Props = {
 
 const Home = () => {
   const [showModal, setShowModal] = useState(false);
+  const [isEditMode, setIsEditMode] = useState(false);
+
   return (
     <div className="home">
       <Head>
         <title>Contacts</title>
       </Head>
 
-      <Header isVisible={showModal} setShowModal={setShowModal}/>
+      <Header isVisible={showModal} setShowModal={setShowModal} isEditMode={isEditMode}/>
       <ContactsList />
     </div>
   );

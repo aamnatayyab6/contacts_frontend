@@ -4,26 +4,28 @@ import Image from "next/image";
 type Props = {
   isVisible: boolean;
   onClose: () => void;
+  mode?: "Add" | "Edit";
 };
 
-const AddEditContact = ({ isVisible, onClose }: Props) => {
+const AddEditContact = ({ isVisible, onClose, mode = "Add" }: Props) => {
   if (!isVisible) return null;
   const handleCancelClick = () => {
     onClose();
   };
 
   const handleDoneClick = () => {
-    // Handle adding the contact here
-    // Then, close the modal using onClose()
     onClose();
   };
+
+  const headingText = mode === "Add" ? "Add Contact" : "Edit Contact";
+
   return (
     <>
       {isVisible && (
         <div className="modal-overlay">
           <div className="modal">
             <div className="modal-info">
-              <h1>Add Contact</h1>
+              <h1>{headingText}</h1>
 
               {/* frame pfp*/}
               <div className="frame">

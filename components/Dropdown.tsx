@@ -1,14 +1,16 @@
 import React from "react";
 import Image from "next/image";
 
-type Props = {};
+type Props = {
+  onEditClick: () => void;
+};
 
-const Dropdown = (props: Props) => {
+const Dropdown = ({ onEditClick }: Props) => {
   return (
     <div className="dropdown-container">
       <div className="dropdown">
         {/* Edit */}
-        <div className="dropdown-menu-item">
+        <div className="dropdown-menu-item" onClick={onEditClick}>
           <span className="contact-item-buttons-icon-holder">
             <Image
               src="/settings.svg"

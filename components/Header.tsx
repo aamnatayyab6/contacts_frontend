@@ -5,9 +5,10 @@ import AddEditContact from "@/components/AddEditContact";
 type Props = {
   isVisible: boolean;
   setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
+  isEditMode: boolean;
 };
 
-export default function Header({ isVisible, setShowModal }: Props) {
+export default function Header({ isVisible, setShowModal, isEditMode }: Props) {
   const handleAddNewClick = () => {
     setShowModal(true);
   };
@@ -30,49 +31,53 @@ export default function Header({ isVisible, setShowModal }: Props) {
 
         {/* middle contacts sec */}
         <div className="contacts-box ">
-          <div className="contacts-headline">
-            {/* title */}
-            <h1>Contacts</h1>
+          {!isEditMode && !isVisible && (
+            <div className="contacts-headline">
+              {/* title */}
+              <h1>Contacts</h1>
 
-            {/* buttons */}
-            <span className="header-buttons">
-              {/* settings */}
-              <span className="buttons-icon">
-                <Image
-                  src="/settings.svg"
-                  alt="settings Icon"
-                  width={24}
-                  height={24}
-                  priority
-                />
-              </span>
+              {/* buttons */}
 
-              {/* pfp */}
-              <span className="buttons-icon">
-                <Image
-                  src="/photo.svg"
-                  alt="Pfp Icon"
-                  width={24}
-                  height={24}
-                  className="pfp-image"
-                  priority
-                />
-              </span>
+              <span className="header-buttons">
+                {/* settings */}
+                <span className="buttons-icon">
+                  <Image
+                    src="/settings.svg"
+                    alt="settings Icon"
+                    width={24}
+                    height={24}
+                    priority
+                  />
+                </span>
 
-              {/* add new */}
-              <span className="add-new-icon" onClick={handleAddNewClick}>
-                <Image
-                  src="/plusIcon.svg"
-                  alt="Add New Button"
-                  width={24}
-                  height={24}
-                  className="add-button"
-                  priority
-                />
-                <h2 className="add-new-text">Add new</h2>
+                {/* pfp */}
+                <span className="buttons-icon">
+                  <Image
+                    src="/photo.svg"
+                    alt="Pfp Icon"
+                    width={24}
+                    height={24}
+                    className="pfp-image"
+                    priority
+                  />
+                </span>
+
+                {/* add new */}
+
+                <span className="add-new-icon" onClick={handleAddNewClick}>
+                  <Image
+                    src="/plusIcon.svg"
+                    alt="Add New Button"
+                    width={24}
+                    height={24}
+                    className="add-button"
+                    priority
+                  />
+                  <h2 className="add-new-text">Add new</h2>
+                </span>
               </span>
-            </span>
-          </div>
+            </div>
+          )}
         </div>
 
         {/* right header */}
@@ -93,10 +98,10 @@ export default function Header({ isVisible, setShowModal }: Props) {
           <AddEditContact
             isVisible={isVisible}
             onClose={() => setShowModal(false)}
+            mode="Add"
           />
         )}
       </div>
-      {/* {isVisible && <div className="modal-overlay" />} */}
     </>
   );
 }

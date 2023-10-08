@@ -1,11 +1,19 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import Dropdown from "./Dropdown";
+import AddEditContact from "./AddEditContact";
 
 type Props = {};
 
 export default function ContactListItem({}: Props) {
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
+  const [isEditClicked, setIsEditClicked] = useState(false);
+
+  const handleEditClick = () => {
+    setIsDropdownVisible(false); // Close the dropdown
+    setIsEditClicked(true);
+  };
+
   return (
     <div className="contact-item">
       <div className="contact-info">
@@ -59,9 +67,17 @@ export default function ContactListItem({}: Props) {
             height={24}
             priority
           />
-          {isDropdownVisible && <Dropdown />}
+          {isDropdownVisible && <Dropdown onEditClick={handleEditClick} />}
         </span>
       </div>
+
+      {isEditClicked && (
+        <AddEditContact
+          isVisible={isEditClicked}
+          onClose={() => setIsEditClicked(false)}
+          mode="Edit" // Set the mode to "Edit"
+        />
+      )}
     </div>
   );
 }
