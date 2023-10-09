@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import Dropdown from "./Dropdown";
 import AddEditContact from "./AddEditContact";
@@ -16,6 +16,21 @@ export default function ContactListItem({
 }: Props) {
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
   const [isEditClicked, setIsEditClicked] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null); // Define a ref with the correct type
+
+  const handleClickOutside = (event: MouseEvent) => {
+    // Check if dropdownRef.current is defined before using it
+    if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+      setIsDropdownVisible(false);
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener("click", handleClickOutside);
+    return () => {
+      window.removeEventListener("click", handleClickOutside);
+    };
+  }, []);
 
   const handleEditClick = () => {
     setIsDropdownVisible(false); // Close the dropdown
@@ -55,40 +70,21 @@ export default function ContactListItem({
       {/* buttons on hover */}
       <div className="contact-item-buttons opacity-0 hover:opacity-100">
         <span className="contact-item-buttons-icon-holder">
-          <Image
-            src="/mute.svg"
-            alt="Mute Icon"
-            width={24}
-            height={24}
-            priority
-          />
+          <Image src="/mute.svg" alt="Mute Icon" width={24} height={24} priority />
         </span>
         <span className="contact-item-buttons-icon-holder">
-          <Image
-            src="/call.svg"
-            alt="Call Icon"
-            width={24}
-            height={24}
-            priority
-          />
+          <Image src="/call.svg" alt="Call Icon" width={24} height={24} priority />
         </span>
         <span
           className="contact-item-buttons-icon-holder more-icon"
           onMouseEnter={() => setIsDropdownVisible(true)}
           onMouseLeave={() => setIsDropdownVisible(false)}
         >
-          <Image
-            src="/more-3-dots.svg"
-            alt="More Icon"
-            width={24}
-            height={24}
-            priority
-          />
+          <Image src="/more-3-dots.svg" alt="More Icon" width={24} height={24} priority />
           {isDropdownVisible && (
-            <Dropdown
-              onEditClick={handleEditClick}
-              onDeleteClick={() => handleDeleteClick(contact.id)}
-            />
+            <div ref={dropdownRef}>
+              <Dropdown onEditClick={handleEditClick} onDeleteClick={() => handleDeleteClick(contact.id)} />
+            </div>
           )}
         </span>
       </div>
@@ -99,7 +95,7 @@ export default function ContactListItem({
           onClose={() => {
             setIsEditClicked(false);
           }}
-          mode="Edit" // Set the mode to "Edit"
+          mode="Edit"
           contact={contact}
           refreshContactList={refreshContactList}
         />
