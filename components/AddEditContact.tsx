@@ -1,13 +1,20 @@
 import React from "react";
 import Image from "next/image";
+import { Contact } from "@/typings";
 
 type Props = {
   isVisible: boolean;
   onClose: () => void;
   mode?: "Add" | "Edit";
+  contact?: Contact;
 };
 
-const AddEditContact = ({ isVisible, onClose, mode = "Add" }: Props) => {
+const AddEditContact = ({
+  isVisible,
+  onClose,
+  mode = "Add",
+  contact,
+}: Props) => {
   if (!isVisible) return null;
   const handleCancelClick = () => {
     onClose();
@@ -31,7 +38,7 @@ const AddEditContact = ({ isVisible, onClose, mode = "Add" }: Props) => {
               <div className="frame">
                 <span className="modal-pfp">
                   <Image
-                    src="/photo.svg"
+                    src={contact?.image || "/default-image.svg"}
                     alt="pfp"
                     width={88}
                     height={88}
@@ -60,7 +67,14 @@ const AddEditContact = ({ isVisible, onClose, mode = "Add" }: Props) => {
               <div className="add-info">
                 <p className="add-info-label">Name</p>
                 <div className="input-field">
-                  <input className="input-area" placeholder="Jamie Wright" />
+                  <input
+                    className="input-area"
+                    placeholder={
+                      mode === "Add"
+                        ? "Jamie Wright"
+                        : contact?.name || "Unknown"
+                    }
+                  />
                 </div>
               </div>
 
@@ -68,7 +82,14 @@ const AddEditContact = ({ isVisible, onClose, mode = "Add" }: Props) => {
               <div className="add-info">
                 <p className="add-info-label">Phone number</p>
                 <div className="input-field">
-                  <input className="input-area" placeholder="+36 20 556 2828" />
+                  <input
+                    className="input-area"
+                    placeholder={
+                      mode === "Add"
+                        ? "+01 234 5678"
+                        : contact?.number || "Add your phone number"
+                    }
+                  />
                 </div>
               </div>
 
@@ -78,7 +99,11 @@ const AddEditContact = ({ isVisible, onClose, mode = "Add" }: Props) => {
                 <div className="input-field">
                   <input
                     className="input-area"
-                    placeholder="jamie.wright@mail.com"
+                    placeholder={
+                      mode === "Add"
+                        ? "jamie.wright@mail.com"
+                        : contact?.email || "Add your email address"
+                    }
                   />
                 </div>
               </div>

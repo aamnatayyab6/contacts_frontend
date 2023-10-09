@@ -2,10 +2,13 @@ import React, { useState } from "react";
 import Image from "next/image";
 import Dropdown from "./Dropdown";
 import AddEditContact from "./AddEditContact";
+import { Contact } from "@/typings";
 
-type Props = {};
+type Props = {
+  contact: Contact;
+};
 
-export default function ContactListItem({}: Props) {
+export default function ContactListItem({ contact }: Props) {
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
   const [isEditClicked, setIsEditClicked] = useState(false);
 
@@ -20,7 +23,7 @@ export default function ContactListItem({}: Props) {
         {/* pfp */}
         <span className="contact-pfp">
           <Image
-            src="/timmylewis.svg"
+            src={contact?.image || "/default-image.svg"}
             alt="Pfp Icon"
             width={40}
             height={40}
@@ -30,8 +33,8 @@ export default function ContactListItem({}: Props) {
         </span>
         {/* card */}
         <span className="namecard">
-          <h3>Timothy Lewis</h3>
-          <p className="message">+36 01 234 5678</p>
+          <h3>{contact?.name}</h3>
+          <p className="message">{contact?.number}</p>
         </span>
       </div>
 
@@ -76,6 +79,7 @@ export default function ContactListItem({}: Props) {
           isVisible={isEditClicked}
           onClose={() => setIsEditClicked(false)}
           mode="Edit" // Set the mode to "Edit"
+          contact={contact}
         />
       )}
     </div>
