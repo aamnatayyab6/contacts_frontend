@@ -87,8 +87,7 @@ export default function ContactListItem({
           {isDropdownVisible && (
             <Dropdown
               onEditClick={handleEditClick}
-              contact={contact}
-              onDeleteClick={() => handleDeleteClick(contact.id)} 
+              onDeleteClick={() => handleDeleteClick(contact.id)}
             />
           )}
         </span>
@@ -99,7 +98,6 @@ export default function ContactListItem({
           isVisible={isEditClicked}
           onClose={() => {
             setIsEditClicked(false);
-            refreshContactList();
           }}
           mode="Edit" // Set the mode to "Edit"
           contact={contact}

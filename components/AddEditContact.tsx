@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import { Contact } from "@/typings";
 
@@ -24,28 +24,34 @@ const AddEditContact = ({
     image: mode === "Add" ? "" : contact?.image || "",
   });
 
-  useEffect(() => {
-    if (contact && mode === "Edit") {
-      setFormData({
-        name: contact.name || "",
-        number: contact.number || "",
-        email: contact.email || "",
-        image: contact?.image || "",
-      });
-    }
-  }, [contact, mode]);
-
   if (!isVisible) return null;
+
   const handleCancelClick = () => {
     onClose();
   };
 
   const handleDoneClick = async () => {
+    // validation
+    const isNameChanged = formData.name !== contact?.name;
+    const isNumberChanged = formData.number !== (contact?.number || "");
+    const isEmailChanged = formData.email !== (contact?.email || "");
+    // Validation: Check if the name is empty
+    if (formData.name.trim() === "") {
+      console.error("Name is required.");
+      return;
+    }
+
+    if (!isNameChanged && !isNumberChanged && !isEmailChanged) {
+      // No changes made, simply close the modal
+      onClose();
+      return;
+    }
+
     // Construct the JSON data for the new contact
     const addContactData = {
-      name: formData.name,
-      number: formData.number,
-      email: formData.email,
+      name: isNameChanged ? formData.name : null,
+      number: isNumberChanged ? formData.number : null,
+      email: isEmailChanged ? formData.email : null,
     };
 
     if (mode === "Add") {
@@ -78,10 +84,10 @@ const AddEditContact = ({
       // Construct the JSON data for updating a contact
       const updateContactData = {
         id: contact.id,
-        name: formData.name || contact.name,
-        number: formData.number || contact.number,
-        email: formData.email || contact.email,
-        image: formData.image || contact.image,
+        name: isNameChanged ? formData.name : null,
+        number: isNumberChanged ? formData.number : null,
+        email: isEmailChanged ? formData.email : null,
+        image: formData.image || null,
       };
       try {
         // Send a PUT request to the "Edit Contact" API endpoint
@@ -152,11 +158,7 @@ const AddEditContact = ({
                 <div className="input-field">
                   <input
                     className="input-area"
-                    placeholder={
-                      mode === "Add"
-                        ? "Jamie Wright"
-                        : contact?.name || "Unknown"
-                    }
+                    placeholder={mode === "Add" ? "Jamie Wright" : ""}
                     value={formData.name}
                     onChange={(e) => {
                       setFormData({ ...formData, name: e.target.value });
@@ -171,12 +173,14 @@ const AddEditContact = ({
                 <div className="input-field">
                   <input
                     className="input-area"
-                    placeholder={
-                      mode === "Add" ? "+01 234 5678" : contact?.number
-                    }
+                    placeholder={mode === "Add" ? "+01 234 5678" : ""}
                     value={formData.number}
                     onChange={(e) => {
-                      setFormData({ ...formData, number: e.target.value });
+                      const newValue = e.target.value;
+                      setFormData((prevData) => ({
+                        ...prevData,
+                        number: newValue,
+                      }));
                     }}
                   />
                 </div>
@@ -188,12 +192,14 @@ const AddEditContact = ({
                 <div className="input-field">
                   <input
                     className="input-area"
-                    placeholder={
-                      mode === "Add" ? "jamie.wright@mail.com" : contact?.email
-                    }
+                    placeholder={mode === "Add" ? "jamie.wright@mail.com" : ""}
                     value={formData.email}
                     onChange={(e) => {
-                      setFormData({ ...formData, email: e.target.value });
+                      const newValue = e.target.value;
+                      setFormData((prevData) => ({
+                        ...prevData,
+                        email: newValue,
+                      }));
                     }}
                   />
                 </div>

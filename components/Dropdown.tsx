@@ -1,14 +1,12 @@
 import React from "react";
 import Image from "next/image";
-import { Contact } from "@/typings";
 
 type Props = {
   onEditClick: () => void;
   onDeleteClick: () => void;
-  contact: Contact;
 };
 
-const Dropdown = ({ onEditClick, contact, onDeleteClick }: Props) => {
+const Dropdown = ({ onEditClick, onDeleteClick }: Props) => {
   return (
     <div className="dropdown-container">
       <div className="dropdown">
