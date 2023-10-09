@@ -51,8 +51,12 @@ export const updateContact = async (contactData: any) => {
 
 // delete a contact by ID
 export const deleteContact = async (id: string) => {
-  const response = await fetch(`${backendUrl}/deleteContact/${id}`, {
+  const response = await fetch(`${backendUrl}/deleteContact`, {
     method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ id }), // Send the ID in the request body
   });
   const data = await response.json();
   return data;

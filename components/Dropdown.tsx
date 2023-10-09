@@ -1,11 +1,14 @@
 import React from "react";
 import Image from "next/image";
+import { Contact } from "@/typings";
 
 type Props = {
   onEditClick: () => void;
+  onDeleteClick: () => void;
+  contact: Contact;
 };
 
-const Dropdown = ({ onEditClick }: Props) => {
+const Dropdown = ({ onEditClick, contact, onDeleteClick }: Props) => {
   return (
     <div className="dropdown-container">
       <div className="dropdown">
@@ -40,7 +43,7 @@ const Dropdown = ({ onEditClick }: Props) => {
         </div>
 
         {/* remove */}
-        <div className="dropdown-menu-item">
+        <div className="dropdown-menu-item" onClick={onDeleteClick}>
           <span className="contact-item-buttons-icon-holder">
             <Image
               src="/delete.svg"

@@ -3,6 +3,7 @@ import Image from "next/image";
 import Dropdown from "./Dropdown";
 import AddEditContact from "./AddEditContact";
 import { Contact } from "@/typings";
+import { deleteContact } from "@/pages/api/contacts";
 
 type Props = {
   contact: Contact;
@@ -19,6 +20,15 @@ export default function ContactListItem({
   const handleEditClick = () => {
     setIsDropdownVisible(false); // Close the dropdown
     setIsEditClicked(true);
+  };
+
+  const handleDeleteClick = async (id: string) => {
+    try {
+      await deleteContact(id);
+      refreshContactList();
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
@@ -74,7 +84,13 @@ export default function ContactListItem({
             height={24}
             priority
           />
-          {isDropdownVisible && <Dropdown onEditClick={handleEditClick} />}
+          {isDropdownVisible && (
+            <Dropdown
+              onEditClick={handleEditClick}
+              contact={contact}
+              onDeleteClick={() => handleDeleteClick(contact.id)} 
+            />
+          )}
         </span>
       </div>
 
