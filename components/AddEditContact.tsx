@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { Contact } from "@/typings";
 
@@ -7,6 +7,7 @@ type Props = {
   onClose: () => void;
   mode?: "Add" | "Edit";
   contact?: Contact;
+  refreshContactList: () => void;
 };
 
 const AddEditContact = ({
@@ -14,13 +15,66 @@ const AddEditContact = ({
   onClose,
   mode = "Add",
   contact,
+  refreshContactList,
 }: Props) => {
+  const [formData, setFormData] = useState({
+    name: mode === "Add" ? "" : contact?.name || "",
+    number: mode === "Add" ? "" : contact?.number || "",
+    email: mode === "Add" ? "" : contact?.email || "",
+  });
+
+  useEffect(() => {
+    if (contact && mode === "Edit") {
+      setFormData({
+        name: contact.name || "",
+        number: contact.number || "",
+        email: contact.email || "",
+      });
+    }
+  }, [contact, mode]);
+
   if (!isVisible) return null;
   const handleCancelClick = () => {
     onClose();
   };
 
-  const handleDoneClick = () => {
+  const handleDoneClick = async () => {
+    // Construct the JSON data for the new contact
+    const newContactData = {
+      name: formData.name,
+      number: formData.number,
+      email: formData.email,
+    };
+
+    if (mode === "Add") {
+      try {
+        // Send a POST request to the "Add Contact" API endpoint
+        const response = await fetch("/api/routes/addContact", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(newContactData),
+        });
+
+        if (response.ok) {
+          // Contact added successfully
+          onClose();
+          refreshContactList();
+        } else {
+          // Handle error cases, e.g., show an error message
+        }
+      } catch (error) {
+        console.error("Error adding contact:", error);
+        // Handle error cases, e.g., show an error message
+      }
+    } else if (mode === "Edit") {
+      // Handle updating an existing contact using the "Edit Contact" API
+      // Submit formData to the API endpoint for editing an existing contact
+      // Use the contact.id to identify the contact to be updated
+      // onContactAddedOrEdited();
+      onClose();
+    }
     onClose();
   };
 
@@ -74,6 +128,10 @@ const AddEditContact = ({
                         ? "Jamie Wright"
                         : contact?.name || "Unknown"
                     }
+                    value={formData.name}
+                    onChange={(e) => {
+                      setFormData({ ...formData, name: e.target.value });
+                    }}
                   />
                 </div>
               </div>
@@ -89,6 +147,10 @@ const AddEditContact = ({
                         ? "+01 234 5678"
                         : contact?.number || "Add your phone number"
                     }
+                    value={formData.number}
+                    onChange={(e) => {
+                      setFormData({ ...formData, number: e.target.value });
+                    }}
                   />
                 </div>
               </div>
@@ -104,6 +166,10 @@ const AddEditContact = ({
                         ? "jamie.wright@mail.com"
                         : contact?.email || "Add your email address"
                     }
+                    value={formData.email}
+                    onChange={(e) => {
+                      setFormData({ ...formData, email: e.target.value });
+                    }}
                   />
                 </div>
               </div>

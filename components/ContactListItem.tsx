@@ -6,9 +6,13 @@ import { Contact } from "@/typings";
 
 type Props = {
   contact: Contact;
+  refreshContactList: () => void;
 };
 
-export default function ContactListItem({ contact }: Props) {
+export default function ContactListItem({
+  contact,
+  refreshContactList,
+}: Props) {
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
   const [isEditClicked, setIsEditClicked] = useState(false);
 
@@ -77,9 +81,12 @@ export default function ContactListItem({ contact }: Props) {
       {isEditClicked && (
         <AddEditContact
           isVisible={isEditClicked}
-          onClose={() => setIsEditClicked(false)}
+          onClose={() => {
+            setIsEditClicked(false);
+          }}
           mode="Edit" // Set the mode to "Edit"
           contact={contact}
+          refreshContactList={refreshContactList}
         />
       )}
     </div>
