@@ -5,7 +5,7 @@ const backendUrl = "https://contacts-backend-hhfn.onrender.com";
 // fetch all contacts
 export async function getContacts() {
   try {
-    const response = await fetch(`${backendUrl}/`);
+    const response = await fetch(`${backendUrl}`);
     if (!response.ok) {
       throw new Error("Network response was not ok");
     }
@@ -37,8 +37,8 @@ export const createContact = async (contactData: any) => {
 };
 
 // update a contact by ID
-export const updateContact = async (id: string, contactData: any) => {
-  const response = await fetch(`${backendUrl}/updateContact/${id}`, {
+export const updateContact = async (contactData: any) => {
+  const response = await fetch(`${backendUrl}/updateContact`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",

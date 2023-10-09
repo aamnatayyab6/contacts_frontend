@@ -83,6 +83,7 @@ export default function ContactListItem({
           isVisible={isEditClicked}
           onClose={() => {
             setIsEditClicked(false);
+            refreshContactList();
           }}
           mode="Edit" // Set the mode to "Edit"
           contact={contact}

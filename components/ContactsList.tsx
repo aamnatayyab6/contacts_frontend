@@ -33,7 +33,8 @@ export default function ContactsList({}: Props) {
 
   useEffect(() => {
     refreshContactList();
-  }, [contacts]);
+  }, [contacts])
+  
 
   return (
     <div className="contacts-container">
